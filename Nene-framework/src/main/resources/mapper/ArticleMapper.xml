@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nene.domain.mapper.ArticleMapper">
+<mapper namespace="com.nene.mapper.ArticleMapper">
 
     <resultMap id="BaseResultMap" type="com.nene.domain.entity.Article">
             <id property="id" column="id" jdbcType="BIGINT"/>

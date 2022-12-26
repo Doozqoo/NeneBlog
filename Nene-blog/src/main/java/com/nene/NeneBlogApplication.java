@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Ayachi Nene
  */
 @SpringBootApplication
-@MapperScan(basePackages = {"com.nene.domain.mapper"})
+@MapperScan(basePackages = {"com.nene.mapper"})
 public class NeneBlogApplication {
     public static void main(String[] args) {
         SpringApplication.run(NeneBlogApplication.class, args);

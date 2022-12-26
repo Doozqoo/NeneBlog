@@ -1,4 +1,4 @@
-package com.nene.domain.service;
+package com.nene.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.nene.domain.entity.Article;

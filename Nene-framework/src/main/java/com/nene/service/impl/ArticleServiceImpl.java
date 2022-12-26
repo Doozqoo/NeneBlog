@@ -1,9 +1,9 @@
-package com.nene.domain.service.impl;
+package com.nene.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nene.domain.entity.Article;
-import com.nene.domain.mapper.ArticleMapper;
-import com.nene.domain.service.ArticleService;
+import com.nene.mapper.ArticleMapper;
+import com.nene.service.ArticleService;
 import org.springframework.stereotype.Service;
 
 /**

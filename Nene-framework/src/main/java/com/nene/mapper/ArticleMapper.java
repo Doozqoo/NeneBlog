@@ -1,4 +1,4 @@
-package com.nene.domain.mapper;
+package com.nene.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.nene.domain.entity.Article;
