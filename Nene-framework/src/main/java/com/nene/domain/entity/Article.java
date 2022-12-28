@@ -22,12 +22,12 @@ public class Article implements Serializable {
     private Long id;
 
     /**
-     * '标题'
+     * 标题
      */
     private String title;
 
     /**
-     * '文章内容'
+     * 文章内容
      */
     private String content;
 

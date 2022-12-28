@@ -1,6 +1,10 @@
 server:
   port: 7777
 spring:
+  security:
+    user:
+      name: root
+      password: root
   datasource:
     url: jdbc:mysql://localhost:3306/nene_blog?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
