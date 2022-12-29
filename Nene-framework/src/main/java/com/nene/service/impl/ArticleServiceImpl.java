@@ -1,7 +1,7 @@
 package com.nene.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.nene.constants.ArticleConstants;
+import com.nene.constants.SystemConstants;
 import com.nene.domain.ResponseResult;
 import com.nene.domain.entity.Article;
 import com.nene.domain.vo.HotArticleVo;
@@ -34,7 +34,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
                 .select(Article::getId,
                         Article::getTitle,
                         Article::getViewCount)
-                .eq(Article::getStatus, ArticleConstants.ARTICLE_STATUS_NORMAL)
+                .eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_NORMAL)
                 .orderByDesc(Article::getViewCount)
                 .last("limit 0, 10")
                 .list();
