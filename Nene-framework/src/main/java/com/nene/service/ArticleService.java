@@ -14,7 +14,25 @@ public interface ArticleService extends IService<Article> {
     /**
      * 获取热门文章
      *
-     * @return
+     * @return 返回热门文章对象集合
      */
     ResponseResult getHotArticleList();
+
+    /**
+     * 获取文章列表
+     *
+     * @param pageNum    页码
+     * @param pageSize   每页展示数量
+     * @param categoryId 分类id
+     * @return 返回文章对象集合
+     */
+    ResponseResult getArticleList(Integer pageNum, Integer pageSize, Long categoryId);
+
+    /**
+     * 获取置顶文章
+     *
+     * @param categoryId 分类id
+     * @return 返回置顶文章对象集合
+     */
+    ResponseResult getTopArticleList(Long categoryId);
 }

@@ -6,6 +6,16 @@ package com.nene.constants;
 public class SystemConstants {
 
     /**
+     * 文章没有置顶
+     */
+    public static final Character ARTICLE_TOP_OFF = '0';
+
+    /**
+     * 文章置顶
+     */
+    public static final Character ARTICLE_TOP_ON = '1';
+
+    /**
      * 文章属于草稿
      */
     public static final int ARTICLE_STATUS_DRAFT = 1;
