@@ -27,11 +27,11 @@ public class ArticleCategoryDictionary {
     }
 
     public static void put(ArticleCategory articleCategory){
-        dictionaryMap.put(articleCategory.getId(), articleCategory.getName());
+       put(articleCategory.getId(), articleCategory.getName());
     }
 
     public static void put(List<ArticleCategory> list) {
-        list.forEach(articleCategory -> dictionaryMap.put(articleCategory.getId(), articleCategory.getName()));
+        list.forEach(ArticleCategoryDictionary::put);
     }
 
     public static boolean containsKey(Long key){
@@ -39,6 +39,9 @@ public class ArticleCategoryDictionary {
     }
 
     public static String translate(Long key){
+        if(!containsKey(key)){
+            update();
+        }
         return dictionaryMap.get(key);
     }
 

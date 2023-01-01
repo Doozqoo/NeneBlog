@@ -26,7 +26,7 @@ public interface ArticleService extends IService<Article> {
      * @param categoryId 分类id
      * @return 返回文章对象集合
      */
-    ResponseResult getArticleList(Integer pageNum, Integer pageSize, Long categoryId);
+    ResponseResult getArticleSnapshotList(Integer pageNum, Integer pageSize, Long categoryId);
 
     /**
      * 获取置顶文章
@@ -34,5 +34,13 @@ public interface ArticleService extends IService<Article> {
      * @param categoryId 分类id
      * @return 返回置顶文章对象集合
      */
-    ResponseResult getTopArticleList(Long categoryId);
+    ResponseResult getTopArticleSnapshotList(Long categoryId);
+
+    /**
+     * 获取文章详情数据
+     *
+     * @param articleId 文章id
+     * @return 文章详情数据
+     */
+    ResponseResult getArticleDetail(Long articleId);
 }

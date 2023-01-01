@@ -6,8 +6,9 @@ import com.nene.cache.ArticleCategoryDictionary;
 import com.nene.constants.SystemConstants;
 import com.nene.domain.ResponseResult;
 import com.nene.domain.entity.Article;
+import com.nene.domain.vo.ArticleDetailVo;
 import com.nene.domain.vo.HotArticleVo;
-import com.nene.domain.vo.ListArticleVo;
+import com.nene.domain.vo.ArticleSnapshotVo;
 import com.nene.domain.vo.PageVo;
 import com.nene.enums.AppHttpCodeEnum;
 import com.nene.mapper.ArticleMapper;
@@ -55,7 +56,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     }
 
     @Override
-    public ResponseResult getTopArticleList(Long categoryId) {
+    public ResponseResult getTopArticleSnapshotList(Long categoryId) {
 
         List<Article> articles = this.lambdaQuery()
                 .select(Article::getId,
@@ -74,20 +75,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
                 .orderByDesc(Article::getCreateTime)
                 .list();
 
-        List<ListArticleVo> listArticleVos = BeanCopyUtils.beanListCopy(articles, ListArticleVo.class);
+        List<ArticleSnapshotVo> articleSnapshotVos = BeanCopyUtils.beanListCopy(articles, ArticleSnapshotVo.class);
 
-        for (ListArticleVo vo : listArticleVos) {
-            if (!ArticleCategoryDictionary.containsKey(vo.getCategoryId())) {
-                ArticleCategoryDictionary.update();
-            }
+        for (ArticleSnapshotVo vo : articleSnapshotVos) {
             vo.setCategoryName(ArticleCategoryDictionary.translate(vo.getCategoryId()));
         }
 
-        return ResponseResult.okResult(listArticleVos);
+        return ResponseResult.okResult(articleSnapshotVos);
     }
 
     @Override
-    public ResponseResult getArticleList(Integer pageNum, Integer pageSize, Long categoryId) {
+    public ResponseResult getArticleSnapshotList(Integer pageNum, Integer pageSize, Long categoryId) {
 
         Page<Article> page = new Page<>(pageNum, pageSize);
         this.lambdaQuery()
@@ -107,16 +105,25 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
                 .orderByDesc(Article::getCreateTime)
                 .page(page);
 
-        List<ListArticleVo> listArticleVos = BeanCopyUtils.beanListCopy(page.getRecords(), ListArticleVo.class);
+        List<ArticleSnapshotVo> articleSnapshotVos = BeanCopyUtils.beanListCopy(page.getRecords(), ArticleSnapshotVo.class);
 
-        for (ListArticleVo vo : listArticleVos) {
-            if (!ArticleCategoryDictionary.containsKey(vo.getCategoryId())) {
-                ArticleCategoryDictionary.update();
-            }
+        for (ArticleSnapshotVo vo : articleSnapshotVos) {
             vo.setCategoryName(ArticleCategoryDictionary.translate(vo.getCategoryId()));
         }
 
-        return ResponseResult.okResult(new PageVo(listArticleVos, page.getTotal()));
+        return ResponseResult.okResult(new PageVo(articleSnapshotVos, page.getTotal()));
+    }
+
+    @Override
+    public ResponseResult getArticleDetail(Long articleId) {
+
+        Article article = this.getById(articleId);
+        if(Objects.isNull(article)){
+            return ResponseResult.errorResult(AppHttpCodeEnum.SYSTEM_ERROR, "文章已被移除");
+        }
+        ArticleDetailVo articleDetailVo = BeanCopyUtils.beanCopy(article, ArticleDetailVo.class);
+        articleDetailVo.setCategoryName(ArticleCategoryDictionary.translate(articleDetailVo.getCategoryId()));
+        return ResponseResult.okResult(articleDetailVo);
     }
 
 }

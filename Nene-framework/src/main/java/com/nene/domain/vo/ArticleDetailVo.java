@@ -9,16 +9,16 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * @ClassName ListArticleVo
- * @Description 文章列表数据封装类
+ * @ClassName ArticleDetailVo
+ * @Description 文章详情数据分装类
  * @Author Protip
- * @Date 2022/12/31 17:56
+ * @Date 2023/1/1 13:13
  * @Version 1.0
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListArticleVo {
+public class ArticleDetailVo {
     /**
      *
      */
@@ -34,6 +34,11 @@ public class ListArticleVo {
      * 文章摘要
      */
     private String summary;
+
+    /**
+     * 文章内容
+     */
+    private String content;
 
     /**
      * 所属分类id
