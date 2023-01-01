@@ -34,4 +34,20 @@ public class SystemConstants {
      * 文章分类正常
      */
     public static final int ARTICLE_CATEGORY_STATUS_NORMAL = 0;
+
+    /**
+     * 友链未审核状态
+     */
+    public static final int LINK_STATUS_UNAPPROVED = 0;
+
+    /**
+     * 友链审核已通过状态
+     */
+    public static final int LINK_STATUS_APPROVED = 1;
+
+    /**
+     * 友链审核未通过状态
+     */
+    public static final int LINK_STATUS_FAILED = 2;
+
 }
