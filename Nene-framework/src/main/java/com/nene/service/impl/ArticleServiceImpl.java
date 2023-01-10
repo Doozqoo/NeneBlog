@@ -7,13 +7,13 @@ import com.nene.constants.SystemConstants;
 import com.nene.domain.ResponseResult;
 import com.nene.domain.entity.Article;
 import com.nene.domain.vo.ArticleDetailVo;
-import com.nene.domain.vo.HotArticleVo;
 import com.nene.domain.vo.ArticleSnapshotVo;
+import com.nene.domain.vo.HotArticleVo;
 import com.nene.domain.vo.PageVo;
 import com.nene.enums.AppHttpCodeEnum;
 import com.nene.mapper.ArticleMapper;
 import com.nene.service.ArticleService;
-import com.nene.utils.BeanCopyUtils;
+import com.nene.utils.BeanCopyUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,7 +50,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         }
 
         // 将实体对象拷贝到vo对象
-        List<HotArticleVo> hotArticleVos = BeanCopyUtils.beanListCopy(articles, HotArticleVo.class);
+        List<HotArticleVo> hotArticleVos = BeanCopyUtil.beanListCopy(articles, HotArticleVo.class);
 
         return ResponseResult.okResult(hotArticleVos);
     }
@@ -75,7 +75,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
                 .orderByDesc(Article::getCreateTime)
                 .list();
 
-        List<ArticleSnapshotVo> articleSnapshotVos = BeanCopyUtils.beanListCopy(articles, ArticleSnapshotVo.class);
+        List<ArticleSnapshotVo> articleSnapshotVos = BeanCopyUtil.beanListCopy(articles, ArticleSnapshotVo.class);
 
         for (ArticleSnapshotVo vo : articleSnapshotVos) {
             vo.setCategoryName(ArticleCategoryDictionary.translate(vo.getCategoryId()));
@@ -105,7 +105,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
                 .orderByDesc(Article::getCreateTime)
                 .page(page);
 
-        List<ArticleSnapshotVo> articleSnapshotVos = BeanCopyUtils.beanListCopy(page.getRecords(), ArticleSnapshotVo.class);
+        List<ArticleSnapshotVo> articleSnapshotVos = BeanCopyUtil.beanListCopy(page.getRecords(), ArticleSnapshotVo.class);
 
         for (ArticleSnapshotVo vo : articleSnapshotVos) {
             vo.setCategoryName(ArticleCategoryDictionary.translate(vo.getCategoryId()));
@@ -118,10 +118,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     public ResponseResult getArticleDetail(Long articleId) {
 
         Article article = this.getById(articleId);
-        if(Objects.isNull(article)){
+        if (Objects.isNull(article)) {
             return ResponseResult.errorResult(AppHttpCodeEnum.SYSTEM_ERROR, "文章已被移除");
         }
-        ArticleDetailVo articleDetailVo = BeanCopyUtils.beanCopy(article, ArticleDetailVo.class);
+        ArticleDetailVo articleDetailVo = BeanCopyUtil.beanCopy(article, ArticleDetailVo.class);
         articleDetailVo.setCategoryName(ArticleCategoryDictionary.translate(articleDetailVo.getCategoryId()));
         return ResponseResult.okResult(articleDetailVo);
     }

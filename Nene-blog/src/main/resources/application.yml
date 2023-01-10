@@ -1,25 +1,29 @@
 server:
-  port: 7777
+    port: 8848
 spring:
-  security:
-    user:
-      name: root
-      password: root
-  datasource:
-    url: jdbc:mysql://localhost:3306/nene_blog?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  servlet:
-    multipart:
-      max-file-size: 2MB
-      max-request-size: 5MB
+    datasource:
+        url: jdbc:mysql://192.168.31.45:3306/nene_blog?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+        username: nene
+        password: nene
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    servlet:
+        multipart:
+            max-file-size: 2MB
+            max-request-size: 5MB
+    redis:
+        host: 192.168.31.29
+        port: 6379
 mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    db-config:
-      logic-delete-field: delFlag
-      logic-delete-value: 1
-      logic-not-delete-value: 0
-      id-type: auto
+    configuration:
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    global-config:
+        db-config:
+            logic-delete-field: delFlag
+            logic-delete-value: 1
+            logic-not-delete-value: 0
+            id-type: auto
+custom:
+    request:
+        excluded-urls:
+            - /login
+            - /link/all

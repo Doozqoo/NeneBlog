@@ -6,10 +6,10 @@ import com.nene.domain.ResponseResult;
 import com.nene.domain.entity.Article;
 import com.nene.domain.entity.ArticleCategory;
 import com.nene.domain.vo.ArticleCategoryVo;
-import com.nene.service.ArticleCategoryService;
 import com.nene.mapper.ArticleCategoryMapper;
+import com.nene.service.ArticleCategoryService;
 import com.nene.service.ArticleService;
-import com.nene.utils.BeanCopyUtils;
+import com.nene.utils.BeanCopyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +51,7 @@ public class ArticleCategoryServiceImpl extends ServiceImpl<ArticleCategoryMappe
                 .eq(ArticleCategory::getStatus, SystemConstants.ARTICLE_CATEGORY_STATUS_NORMAL)
                 .list();
 
-        List<ArticleCategoryVo> categoryVos = BeanCopyUtils.beanListCopy(categories, ArticleCategoryVo.class);
+        List<ArticleCategoryVo> categoryVos = BeanCopyUtil.beanListCopy(categories, ArticleCategoryVo.class);
 
         return ResponseResult.okResult(categoryVos);
     }

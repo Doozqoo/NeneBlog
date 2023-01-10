@@ -1,7 +1,8 @@
 package com.nene.mapper;
 
-import com.nene.domain.entity.ArticleCategory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.nene.domain.entity.ArticleCategory;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Ayachi Nene
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @createDate 2022-12-29 15:35:13
  * @Entity com.nene..domain.entity.Category
  */
+@Repository
 public interface ArticleCategoryMapper extends BaseMapper<ArticleCategory> {
 
 }

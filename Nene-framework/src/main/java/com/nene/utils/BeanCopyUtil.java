@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 /**
  * @author Ayachi Nene
  */
-public class BeanCopyUtils {
+public class BeanCopyUtil {
 
-    public BeanCopyUtils() {
+    public BeanCopyUtil() {
     }
 
     public static <T> T beanCopy(Object source, Class<T> clazz) {
