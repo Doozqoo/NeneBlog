@@ -19,6 +19,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -35,7 +37,7 @@ import java.util.List;
  * @Version 1.0
  */
 @Component
-public class AuthorizeFilter extends OncePerRequestFilter {
+public class AuthorizeFilter extends OncePerRequestFilter implements HandlerInterceptor {
 
     @Autowired
     private CustomPassRules customPassRules;
@@ -57,7 +59,7 @@ public class AuthorizeFilter extends OncePerRequestFilter {
         // 获取token
         String token = request.getHeader("token");
         if (!StringUtils.hasText(token)) {
-            // 登录获取token
+            // 需要登录获取token
             ResponseResult responseResult = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
             WebUtil.renderString(response, JacksonUtil.writeValueAsString(responseResult));
             return;
@@ -100,5 +102,10 @@ public class AuthorizeFilter extends OncePerRequestFilter {
         Authentication authentication = new UsernamePasswordAuthenticationToken(principal, null, null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         chain.doFilter(request, response);
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }
 }

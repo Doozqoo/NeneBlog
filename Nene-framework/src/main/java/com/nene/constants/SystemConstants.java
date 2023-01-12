@@ -60,5 +60,10 @@ public class SystemConstants {
      */
     public static final String USER_STATUS_CLOSE = "1";
 
+    /**
+     * 根评论
+     */
+    public static final String ROOT_COMMENT = "-1";
 
+    public static final String COMMENT_TYPE_ARTICLE = "0";
 }

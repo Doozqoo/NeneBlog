@@ -8,19 +8,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
- * @ClassName ListArticleVo
- * @Description 文章列表数据封装类
+ * @ClassName CommentVo
+ * @Description 评论数据封装类
  * @Author Protip
- * @Date 2022/12/31 17:56
+ * @Date 2023/1/11 15:02
  * @Version 1.0
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ArticleSnapshotVo {
+public class CommentVo {
     /**
      *
      */
@@ -28,53 +29,58 @@ public class ArticleSnapshotVo {
     private Long id;
 
     /**
-     * 标题
+     * 文章id
      */
-    private String title;
+    private Long articleId;
 
     /**
-     * 文章摘要
+     * 根评论id
      */
-    private String summary;
+    private Long rootId;
 
     /**
-     * 所属分类id
+     * 评论内容
      */
-    private Long categoryId;
+    private String content;
 
     /**
-     * 所属分类名称
+     * 评论回复指向的对象id
      */
-    private String categoryName;
+    private Long toCommentUserId;
 
     /**
-     * 缩略图
+     * 论回复指向的对像名称
      */
-    private String thumbnail;
+    private String toCommentUsername;
 
     /**
-     * 评论数
+     * 评论回复所指向的评论id
      */
-    private Integer commentCount;
+    private Long toCommentId;
 
     /**
-     * 访问量
-     */
-    private Long viewCount;
-
-    /**
-     * 是否置顶（0否 1是）
-     */
-    private String isTop;
-
-    /**
-     *
+     * 发表人id
      */
     private Long createBy;
 
     /**
-     *
+     * 发表人
+     */
+    private String username;
+
+    /**
+     * 头像
+     */
+    private String avatar;
+
+    /**
+     * 发表时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
+
+    /**
+     * 子评论
+     */
+    private PageVo subordinateComments;
 }

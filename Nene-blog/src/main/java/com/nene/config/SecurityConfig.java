@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 请求权限配置
                 .authorizeRequests()
                 // 指定请求路径的放行策略
-                .antMatchers("/login", "/link/all").anonymous()
+                .antMatchers("/login").anonymous()
                 .anyRequest().permitAll().and()
                 // 授权异常处理
                 .exceptionHandling()
