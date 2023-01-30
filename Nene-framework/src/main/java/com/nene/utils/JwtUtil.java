@@ -18,7 +18,7 @@ public class JwtUtil {
     /**
      * TOKEN的有效期(ms)
      */
-    private static final int TOKEN_TIME_OUT = 7000 * 1000;
+    private static final int TOKEN_TIME_OUT = 604800 * 1000;
 
     /**
      * 加密KEY

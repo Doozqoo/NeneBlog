@@ -21,6 +21,11 @@ public class ThreadLocalUtil {
         return THREAD_LOCAL.get();
     }
 
+    public static Long getUserId() {
+        User user = THREAD_LOCAL.get();
+        return user == null ? null : user.getId();
+    }
+
     public static void clear() {
         THREAD_LOCAL.remove();
     }

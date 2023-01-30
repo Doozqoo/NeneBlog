@@ -14,7 +14,12 @@ public class BeanCopyUtil {
     }
 
     public static <T> T beanCopy(Object source, Class<T> clazz) {
-        T target = null;
+
+        if(source == null){
+            return null;
+        }
+
+        T target;
         try {
             target = clazz.newInstance();
             BeanUtils.copyProperties(source, target);
@@ -25,6 +30,11 @@ public class BeanCopyUtil {
     }
 
     public static <T> List<T> beanListCopy(List<?> list, Class<T> clazz) {
+
+        if(list == null){
+            return null;
+        }
+
         return list.stream()
                 .map(iter -> beanCopy(iter, clazz))
                 .collect(Collectors.toList());

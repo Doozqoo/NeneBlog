@@ -3,6 +3,8 @@ package com.nene.service.impl;
 import com.nene.constants.SystemConstants;
 import com.nene.domain.LoginUser;
 import com.nene.domain.entity.User;
+import com.nene.enums.AppHttpCodeEnum;
+import com.nene.exception.CustomServiceException;
 import com.nene.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,9 +39,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .one();
 
         if (user == null) {
-            throw new RuntimeException("当前用户不存在！请检查输入！");
+            throw new CustomServiceException(AppHttpCodeEnum.USER_NOT_EXIST);
         } else if (SystemConstants.USER_STATUS_CLOSE.equals(user.getStatus())) {
-            throw new RuntimeException("当前用户已封禁暂时无法登录，请联系管理员解决！");
+            throw new CustomServiceException(AppHttpCodeEnum.USER_STATUS_CLOSED);
         }
 
         return new LoginUser(account, user.getPassword());

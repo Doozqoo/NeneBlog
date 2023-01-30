@@ -21,13 +21,13 @@ public class RedisCache {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    public void setValue(String k, String v) {
-        stringRedisTemplate.opsForValue().set(k, v);
+    public void setValue(String k, String v, long l) {
+        stringRedisTemplate.opsForValue().set(k, v, l, TimeUnit.HOURS);
     }
 
-    public void setValue(String k, Object o) {
+    public void setValue(String k, Object o, long l) {
         String v = JacksonUtil.writeValueAsString(o);
-        stringRedisTemplate.opsForValue().set(k, v, 2, TimeUnit.HOURS);
+        stringRedisTemplate.opsForValue().set(k, v, l, TimeUnit.HOURS);
     }
 
     public <T> T getValue(Object k, Class<T> clazz) {

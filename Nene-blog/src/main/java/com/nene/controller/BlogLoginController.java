@@ -1,16 +1,13 @@
 package com.nene.controller;
 
 import com.nene.domain.ResponseResult;
-import com.nene.domain.dto.UserDto;
+import com.nene.domain.dto.BlogUserLoginDto;
 import com.nene.enums.AppHttpCodeEnum;
 import com.nene.exception.CustomServiceException;
 import com.nene.service.BlogLoginService;
 import com.nene.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName BlogLoginController
@@ -26,11 +23,11 @@ public class BlogLoginController {
     private BlogLoginService blogLoginService;
 
     @PostMapping("/login")
-    public ResponseResult login(@RequestBody UserDto userDto) {
-        if (userDto.getAccount() == null || userDto.getPassword() == null) {
+    public ResponseResult login(@RequestBody BlogUserLoginDto blogUserLoginDto) {
+        if (blogUserLoginDto.getAccount() == null || blogUserLoginDto.getPassword() == null) {
             throw new CustomServiceException(AppHttpCodeEnum.LOGIN_ERROR);
         }
-        return blogLoginService.login(userDto);
+        return blogLoginService.login(blogUserLoginDto);
     }
 
     @GetMapping("/logout")

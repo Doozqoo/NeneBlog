@@ -10,13 +10,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
- * 
+ * 评论数据表
  * @author zhish
- * @TableName nene_link
+ * @TableName nene_comment
  */
 @Data
-@TableName("nene_link")
-public class Link implements Serializable {
+@TableName("nene_comment")
+public class Comment implements Serializable {
     /**
      * 
      */
@@ -24,29 +24,34 @@ public class Link implements Serializable {
     private Long id;
 
     /**
-     * 
+     * 评论类型
      */
-    private String name;
+    private String type;
 
     /**
-     * 
+     * 文章id
      */
-    private String logo;
+    private Long articleId;
 
     /**
-     * 
+     * 根评论id
      */
-    private String description;
+    private Long rootId;
 
     /**
-     * 网站地址
+     * 评论内容
      */
-    private String url;
+    private String content;
 
     /**
-     * 审核状态（0代表审核通过 1代表审核未通过 2代表未审核）
+     * 评论回复指向的对象id
      */
-    private String status;
+    private Long toCommentUserId;
+
+    /**
+     * 评论回复所指向的评论id
+     */
+    private Long toCommentId;
 
     /**
      * 
@@ -73,7 +78,7 @@ public class Link implements Serializable {
     private Date updateTime;
 
     /**
-     * 删除标志（0表示未删除 1表示已删除）
+     * 删除标志
      */
     private Integer delFlag;
 
@@ -90,18 +95,8 @@ public class Link implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Link other = (Link) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getLogo() == null ? other.getLogo() == null : this.getLogo().equals(other.getLogo()))
-            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
-            && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getCreateBy() == null ? other.getCreateBy() == null : this.getCreateBy().equals(other.getCreateBy()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getUpdateBy() == null ? other.getUpdateBy() == null : this.getUpdateBy().equals(other.getUpdateBy()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
-            && (this.getDelFlag() == null ? other.getDelFlag() == null : this.getDelFlag().equals(other.getDelFlag()));
+        Comment other = (Comment) that;
+        return this.getId() != null && this.getId().equals(other.getId());
     }
 
     @Override
@@ -109,11 +104,12 @@ public class Link implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = prime * result + ((getLogo() == null) ? 0 : getLogo().hashCode());
-        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
-        result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
-        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
+        result = prime * result + ((getArticleId() == null) ? 0 : getArticleId().hashCode());
+        result = prime * result + ((getRootId() == null) ? 0 : getRootId().hashCode());
+        result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
+        result = prime * result + ((getToCommentUserId() == null) ? 0 : getToCommentUserId().hashCode());
+        result = prime * result + ((getToCommentId() == null) ? 0 : getToCommentId().hashCode());
         result = prime * result + ((getCreateBy() == null) ? 0 : getCreateBy().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateBy() == null) ? 0 : getUpdateBy().hashCode());
@@ -129,11 +125,12 @@ public class Link implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", logo=").append(logo);
-        sb.append(", description=").append(description);
-        sb.append(", url=").append(url);
-        sb.append(", status=").append(status);
+        sb.append(", type=").append(type);
+        sb.append(", articleId=").append(articleId);
+        sb.append(", rootId=").append(rootId);
+        sb.append(", content=").append(content);
+        sb.append(", toCommentUserId=").append(toCommentUserId);
+        sb.append(", toCommentId=").append(toCommentId);
         sb.append(", createBy=").append(createBy);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateBy=").append(updateBy);

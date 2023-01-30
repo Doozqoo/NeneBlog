@@ -1,6 +1,7 @@
 package com.nene.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.nene.domain.ResponseResult;
 import com.nene.domain.entity.User;
 
 /**
@@ -10,4 +11,10 @@ import com.nene.domain.entity.User;
  */
 public interface UserService extends IService<User> {
 
+    /**
+     * 获取用户信息
+     * @param userId
+     * @return
+     */
+    ResponseResult getUserInfo(Long userId);
 }
