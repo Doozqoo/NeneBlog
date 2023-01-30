@@ -1,5 +1,6 @@
 package com.nene.config;
 
+import com.nene.config.properties.CustomPassRules;
 import com.nene.filter.AuthorizeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.List;
 
 /**
  * @ClassName SecurityConfig
@@ -31,6 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AccessDeniedHandler accessDeniedHandler;
     @Autowired
     private AuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
+    private CustomPassRules customPassRules;
 
     @Bean
     @Override
@@ -45,6 +50,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        // 允许匿名访问的接口
+        List<String> excludedUrls = customPassRules.getExcludedUrls();
+        String[] urls = excludedUrls.toArray(new String[0]);
+
         http
                 // 允许跨域访问
                 .cors(Customizer.withDefaults())
@@ -59,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 请求权限配置
                 .authorizeRequests()
                 // 指定请求路径的放行策略
-                .antMatchers("/login").anonymous()
+                .antMatchers(urls).anonymous()
                 .anyRequest().permitAll().and()
                 // 授权异常处理
                 .exceptionHandling()

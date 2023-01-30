@@ -1,7 +1,7 @@
 package com.nene.service;
 
 import com.nene.domain.ResponseResult;
-import com.nene.domain.dto.UserDto;
+import com.nene.domain.dto.BlogUserLoginDto;
 import com.nene.domain.entity.User;
 
 /**
@@ -16,10 +16,10 @@ public interface BlogLoginService {
     /**
      * 博客用户登录
      *
-     * @param userDto 用户登录数据
+     * @param blogUserLoginDto 用户登录数据
      * @return 登录操作结果
      */
-    ResponseResult login(UserDto userDto);
+    ResponseResult login(BlogUserLoginDto blogUserLoginDto);
 
     /**
      * 退出登录

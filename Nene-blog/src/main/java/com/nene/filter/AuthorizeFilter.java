@@ -88,7 +88,7 @@ public class AuthorizeFilter extends OncePerRequestFilter implements HandlerInte
         // 从redis中获取用户信息
         User user = redisCache.getValue("BlogLogin_" + id, User.class);
         if (user == null) {
-            // 身份信息已过期, 需要重新登录
+            // 已注销, 需要重新登录
             ResponseResult responseResult = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
             WebUtil.renderString(response, JacksonUtil.writeValueAsString(responseResult));
             return;

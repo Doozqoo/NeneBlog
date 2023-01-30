@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class BlogUserLoginDto {
 
     /**
      * 用户名
@@ -26,5 +26,10 @@ public class UserDto {
      * 用户密码
      */
     private String password;
+
+    /**
+     * 是否持久保存登录
+     */
+    private boolean remember = false;
 
 }

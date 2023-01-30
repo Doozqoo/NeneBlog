@@ -1,6 +1,7 @@
 package com.nene.service;
 
 import com.nene.domain.ResponseResult;
+import com.nene.domain.dto.CommentDto;
 import com.nene.domain.entity.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -28,4 +29,11 @@ public interface CommentService extends IService<Comment> {
      * @return 子评论列表数据
      */
     ResponseResult getSubordinateCommentPage(Long rootId, Integer pageNum, Integer pageSize);
+
+    /**
+     * 发表评论
+     * @param commentDto 评论数据
+     * @return 接口执行结果
+     */
+    ResponseResult publishComment(CommentDto commentDto);
 }

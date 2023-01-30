@@ -1,12 +1,10 @@
 package com.nene.controller;
 
 import com.nene.domain.ResponseResult;
+import com.nene.domain.dto.CommentDto;
 import com.nene.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName CommentController
@@ -30,5 +28,10 @@ public class CommentController {
     @GetMapping("/subordinate/list")
     public ResponseResult subordinateCommentPage(@RequestParam("id") Long rootId, @RequestParam("p") Integer pageNum, @RequestParam("n") Integer pageSize) {
         return commentService.getSubordinateCommentPage(rootId, pageNum, pageSize);
+    }
+
+    @PostMapping("/new")
+    public ResponseResult publishComment(@RequestBody CommentDto commentDto) {
+        return commentService.publishComment(commentDto);
     }
 }

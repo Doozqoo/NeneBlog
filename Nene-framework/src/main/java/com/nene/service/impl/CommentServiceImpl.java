@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nene.constants.SystemConstants;
 import com.nene.domain.ResponseResult;
+import com.nene.domain.dto.CommentDto;
 import com.nene.domain.entity.Comment;
 import com.nene.domain.entity.User;
 import com.nene.domain.vo.CommentVo;
@@ -15,7 +16,9 @@ import com.nene.utils.BeanCopyUtil;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -77,6 +80,13 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         return ResponseResult.okResult(new PageVo(commentVos, page.getTotal()));
     }
 
+    @Override
+    public ResponseResult publishComment(CommentDto commentDto) {
+        Comment comment = BeanCopyUtil.beanCopy(commentDto, Comment.class);
+        this.save(comment);
+        return ResponseResult.okResult("评论发布成功！");
+    }
+
     // ==================================================METHOD==================================================
 
     /**
@@ -122,6 +132,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      */
     private List<CommentVo> toCommentVo(List<Comment> comments) {
 
+        if(CollectionUtils.isEmpty(comments)){
+            return null;
+        }
+
         // 提取需要查询的用户id
         List<Long> userIds = Stream.concat(
                 comments.stream().map(Comment::getToCommentUserId),
@@ -131,7 +145,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         // 调用接口查询所需用户信息
         List<User> users = userService.lambdaQuery()
                 .select(User::getId,
-                        User::getUserName,
+                        User::getNickName,
                         User::getAvatar)
                 .in(User::getId, userIds)
                 .list();
@@ -145,19 +159,15 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         for (CommentVo commentVo : commentVos) {
             if(userIdToUserMap.containsKey(commentVo.getCreateBy())){
                 User user = userIdToUserMap.get(commentVo.getCreateBy());
-                commentVo.setUsername(user.getUserName());
+                commentVo.setUsername(user.getNickName());
                 commentVo.setAvatar(user.getAvatar());
             }
             if(userIdToUserMap.containsKey(commentVo.getCreateBy())){
                 User user = userIdToUserMap.get(commentVo.getCreateBy());
-                commentVo.setToCommentUsername(user.getUserName());
+                commentVo.setToCommentUsername(user.getNickName());
             }
         }
 
         return commentVos;
     }
 }
-
-
-
-
