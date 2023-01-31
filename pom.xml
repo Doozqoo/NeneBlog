@@ -27,6 +27,7 @@
         <springfox-swagger2.version>3.0.0</springfox-swagger2.version>
         <springfox-swagger-ui.version>3.0.0</springfox-swagger-ui.version>
         <minio.version>8.5.1</minio.version>
+        <okhttp.version>4.10.0</okhttp.version>
     </properties>
 
     <dependencyManagement>
@@ -75,10 +76,16 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${springfox-swagger-ui.version}</version>
             </dependency>
+            <!-- minio依赖 -->
             <dependency>
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,7 +1,7 @@
 package com.nene.controller;
 
 import com.nene.domain.ResponseResult;
-import com.nene.domain.dto.BlogUserLoginDto;
+import com.nene.domain.dto.UserLoginDto;
 import com.nene.enums.AppHttpCodeEnum;
 import com.nene.exception.CustomServiceException;
 import com.nene.service.BlogLoginService;
@@ -23,11 +23,11 @@ public class BlogLoginController {
     private BlogLoginService blogLoginService;
 
     @PostMapping("/login")
-    public ResponseResult login(@RequestBody BlogUserLoginDto blogUserLoginDto) {
-        if (blogUserLoginDto.getAccount() == null || blogUserLoginDto.getPassword() == null) {
+    public ResponseResult login(@RequestBody UserLoginDto userLoginDto) {
+        if (userLoginDto.getAccount() == null || userLoginDto.getPassword() == null) {
             throw new CustomServiceException(AppHttpCodeEnum.LOGIN_ERROR);
         }
-        return blogLoginService.login(blogUserLoginDto);
+        return blogLoginService.login(userLoginDto);
     }
 
     @GetMapping("/logout")

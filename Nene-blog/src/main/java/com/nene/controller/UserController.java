@@ -1,12 +1,12 @@
 package com.nene.controller;
 
 import com.nene.domain.ResponseResult;
+import com.nene.domain.dto.UserRegisterDto;
+import com.nene.domain.dto.UserUpdateDto;
 import com.nene.service.UserService;
 import com.nene.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName UserController
@@ -25,5 +25,15 @@ public class UserController {
     @GetMapping("/info")
     public ResponseResult getUserInfo(){
         return userService.getUserInfo(ThreadLocalUtil.getUserId());
+    }
+
+    @PutMapping("/info/update")
+    public ResponseResult updateUserInfo(@RequestBody UserUpdateDto dto){
+        return userService.updateUserInfo(dto);
+    }
+
+    @PostMapping("/register")
+    public ResponseResult register(@RequestBody UserRegisterDto dto){
+        return userService.register(dto);
     }
 }

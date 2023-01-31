@@ -5,22 +5,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @ClassName UserDto
- * @Description 用户数据传输类
+ * @ClassName UserRegisterDto
+ * @Description 用户注册相关数据传输类
  * @Author Protip
- * @Date 2023/1/7 18:09
+ * @Date 2023/1/31 15:53
  * @Version 1.0
  */
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlogUserLoginDto {
+public class UserRegisterDto {
 
     /**
      * 用户名
      */
-    private String account;
+    private String userName;
+
+    /**
+     * 昵称
+     */
+    private String nickName;
 
     /**
      * 用户密码
@@ -28,8 +32,8 @@ public class BlogUserLoginDto {
     private String password;
 
     /**
-     * 是否持久保存登录
+     * 邮箱
      */
-    private boolean remember = false;
+    private String email;
 
 }

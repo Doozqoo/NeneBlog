@@ -2,7 +2,7 @@ package com.nene.service.impl;
 
 import com.nene.cache.RedisCache;
 import com.nene.domain.ResponseResult;
-import com.nene.domain.dto.BlogUserLoginDto;
+import com.nene.domain.dto.UserLoginDto;
 import com.nene.domain.entity.User;
 import com.nene.domain.vo.BlogUserLoginVo;
 import com.nene.service.BlogLoginService;
@@ -35,10 +35,10 @@ public class BlogLoginServiceImpl implements BlogLoginService {
     private RedisCache redisCache;
 
     @Override
-    public ResponseResult login(BlogUserLoginDto blogUserLoginDto) {
+    public ResponseResult login(UserLoginDto userLoginDto) {
 
         // 登录授权
-        Authentication authentication = new UsernamePasswordAuthenticationToken(blogUserLoginDto.getAccount(), blogUserLoginDto.getPassword());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userLoginDto.getAccount(), userLoginDto.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authentication);
         if (authenticate == null) {
             throw new RuntimeException("密码错误！");
@@ -58,15 +58,15 @@ public class BlogLoginServiceImpl implements BlogLoginService {
                         User::getAvatar,
                         User::getCreateTime
                 )
-                .eq(User::getEmail, blogUserLoginDto.getAccount())
+                .eq(User::getEmail, userLoginDto.getAccount())
                 .or()
-                .eq(User::getPhoneNumber, blogUserLoginDto.getAccount())
+                .eq(User::getPhoneNumber, userLoginDto.getAccount())
                 .or()
-                .eq(User::getUserName, blogUserLoginDto.getAccount())
+                .eq(User::getUserName, userLoginDto.getAccount())
                 .one();
 
         // 在redis中缓存用户数据
-        long expiration = blogUserLoginDto.isRemember() ? 24 * 7L : 6L;
+        long expiration = userLoginDto.isRemember() ? 24 * 7L : 6L;
         redisCache.setValue("BlogLogin_" + user.getId(), user, expiration);
 
         // 生成token返回
