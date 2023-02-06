@@ -1,8 +1,8 @@
 package com.nene.controller;
 
+import com.nene.annotation.ApiLog;
 import com.nene.domain.ResponseResult;
 import com.nene.service.UploadService;
-import com.nene.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +23,9 @@ public class UploadController {
     @Autowired
     private UploadService uploadService;
 
+    @ApiLog(name = "上传头像")
     @PostMapping("/avatar")
-    public ResponseResult uploadAvatar(MultipartFile file){
+    public ResponseResult uploadAvatar(MultipartFile file) {
         return uploadService.uploadAvatar(file);
     }
 }

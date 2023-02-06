@@ -1,5 +1,6 @@
 package com.nene.controller;
 
+import com.nene.annotation.ApiLog;
 import com.nene.domain.ResponseResult;
 import com.nene.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,9 @@ public class LinkController {
     @Autowired
     private LinkService linkService;
 
+    @ApiLog(name = "友链列表")
     @GetMapping("/all")
-    public ResponseResult getAllLink(){
+    public ResponseResult getAllLink() {
         return linkService.getAllLink();
     }
 }

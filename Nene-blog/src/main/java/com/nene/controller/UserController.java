@@ -1,5 +1,6 @@
 package com.nene.controller;
 
+import com.nene.annotation.ApiLog;
 import com.nene.domain.ResponseResult;
 import com.nene.domain.dto.UserRegisterDto;
 import com.nene.domain.dto.UserUpdateDto;
@@ -22,18 +23,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @ApiLog(name = "用户信息")
     @GetMapping("/info")
-    public ResponseResult getUserInfo(){
+    public ResponseResult getUserInfo() {
         return userService.getUserInfo(ThreadLocalUtil.getUserId());
     }
 
+    @ApiLog(name = "用户信息更新")
     @PutMapping("/info/update")
-    public ResponseResult updateUserInfo(@RequestBody UserUpdateDto dto){
+    public ResponseResult updateUserInfo(@RequestBody UserUpdateDto dto) {
         return userService.updateUserInfo(dto);
     }
 
+    @ApiLog(name = "用户注册")
     @PostMapping("/register")
-    public ResponseResult register(@RequestBody UserRegisterDto dto){
+    public ResponseResult register(@RequestBody UserRegisterDto dto) {
         return userService.register(dto);
     }
 }

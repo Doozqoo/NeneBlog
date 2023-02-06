@@ -3,6 +3,8 @@ package com.nene.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.nene.cache.ArticleCategoryDictionary;
+import com.nene.cache.RedisCache;
+import com.nene.constants.RedisConstants;
 import com.nene.constants.SystemConstants;
 import com.nene.domain.ResponseResult;
 import com.nene.domain.entity.Article;
@@ -14,6 +16,7 @@ import com.nene.enums.AppHttpCodeEnum;
 import com.nene.mapper.ArticleMapper;
 import com.nene.service.ArticleService;
 import com.nene.utils.BeanCopyUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +30,9 @@ import java.util.Objects;
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         implements ArticleService {
+
+    @Autowired
+    private RedisCache redisCache;
 
     @Override
     public ResponseResult getHotArticleList() {
@@ -124,6 +130,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         ArticleDetailVo articleDetailVo = BeanCopyUtil.beanCopy(article, ArticleDetailVo.class);
         articleDetailVo.setCategoryName(ArticleCategoryDictionary.translate(articleDetailVo.getCategoryId()));
         return ResponseResult.okResult(articleDetailVo);
+    }
+
+    @Override
+    public ResponseResult updateViewCount(Long articleId) {
+
+        redisCache.increment(RedisConstants.ARTICLE_VIEW_COUNT, String.valueOf(articleId), 1);
+        return ResponseResult.okResult();
     }
 
 }

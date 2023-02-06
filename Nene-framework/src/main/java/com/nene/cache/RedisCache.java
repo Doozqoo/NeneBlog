@@ -2,10 +2,11 @@ package com.nene.cache;
 
 import com.nene.utils.JacksonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,26 +20,54 @@ import java.util.concurrent.TimeUnit;
 public class RedisCache {
 
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
-    public void setValue(String k, String v, long l) {
-        stringRedisTemplate.opsForValue().set(k, v, l, TimeUnit.HOURS);
+    public void setValue(String k, Object o) {
+        redisTemplate.opsForValue().set(k, o);
     }
 
-    public void setValue(String k, Object o, long l) {
-        String v = JacksonUtil.writeValueAsString(o);
-        stringRedisTemplate.opsForValue().set(k, v, l, TimeUnit.HOURS);
+    public void setHashMap(String k, Map<String, ?> m) {
+        redisTemplate.opsForHash().putAll(k, m);
     }
 
-    public <T> T getValue(Object k, Class<T> clazz) {
-        String jsonStr = stringRedisTemplate.opsForValue().get(k);
-        if (!StringUtils.hasText(jsonStr)) {
+    public void setHashMap(String k, String hk, Object v) {
+        redisTemplate.opsForHash().put(k, hk, v);
+    }
+
+    public <T> T getValue(String k, Class<T> clazz) {
+        return clazz.cast(getValue(k));
+    }
+
+    public Object getValue(String k) {
+        return redisTemplate.opsForValue().get(k);
+    }
+
+    public Map getHashMap(String k) {
+        Map<Object, Object> entries = redisTemplate.opsForHash().entries(k);
+        return entries;
+    }
+
+    public <T> T getValue(String k, String hk, Class<T> clazz) {
+        String jsonStr = String.valueOf(redisTemplate.opsForHash().get(k, hk));
+        if (!StringUtils.hasText(jsonStr) || "null".equals(jsonStr)) {
             return null;
         }
         return JacksonUtil.readValue(jsonStr, clazz);
     }
 
-    public boolean delValue(String key) {
-        return Boolean.TRUE.equals(stringRedisTemplate.delete(key));
+    public void increment(String k, String hk, long v) {
+        redisTemplate.boundHashOps(k).increment(hk, v);
+    }
+
+    public void expire(String k, long l, TimeUnit timeUnit) {
+        redisTemplate.expire(k, l, timeUnit);
+    }
+
+    public void delValue(String k) {
+        redisTemplate.delete(k);
+    }
+
+    public void delValue(String k, String hk) {
+        redisTemplate.opsForHash().delete(k, hk);
     }
 }

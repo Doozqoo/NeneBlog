@@ -1,6 +1,7 @@
 package com.nene.service.impl;
 
 import com.nene.cache.RedisCache;
+import com.nene.constants.RedisConstants;
 import com.nene.domain.ResponseResult;
 import com.nene.domain.dto.UserLoginDto;
 import com.nene.domain.entity.User;
@@ -14,6 +15,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName BlogLoginServiceImpl
@@ -66,8 +69,10 @@ public class BlogLoginServiceImpl implements BlogLoginService {
                 .one();
 
         // 在redis中缓存用户数据
-        long expiration = userLoginDto.isRemember() ? 24 * 7L : 6L;
-        redisCache.setValue("BlogLogin_" + user.getId(), user, expiration);
+        String key = RedisConstants.BLOG_LOGIN + user.getId();
+        redisCache.setValue(key, user);
+        long expiration = userLoginDto.isRemember() ? RedisConstants.TIMEOUT_REMEMBER : RedisConstants.TIMEOUT_DEFAULT;
+        redisCache.expire(key, expiration, TimeUnit.HOURS);
 
         // 生成token返回
         String token = JwtUtil.getToken(user.getId());

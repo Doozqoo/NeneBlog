@@ -1,5 +1,6 @@
 package com.nene.controller;
 
+import com.nene.annotation.ApiLog;
 import com.nene.domain.ResponseResult;
 import com.nene.domain.dto.CommentDto;
 import com.nene.service.CommentService;
@@ -20,17 +21,20 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    @ApiLog(name = "评论列表")
     @GetMapping("/list")
     public ResponseResult commentPage(@RequestParam("id") Long articleId, @RequestParam("p") Integer pageNum, @RequestParam("n") Integer pageSize) {
         return commentService.getCommentPage(articleId, pageNum, pageSize);
     }
 
+    @ApiLog(name = "子评论列表")
     @GetMapping("/subordinate/list")
     public ResponseResult subordinateCommentPage(@RequestParam("id") Long rootId, @RequestParam("p") Integer pageNum, @RequestParam("n") Integer pageSize) {
         return commentService.getSubordinateCommentPage(rootId, pageNum, pageSize);
     }
 
-    @PostMapping("/new")
+    @ApiLog(name = "发送评论")
+    @PostMapping("/send")
     public ResponseResult publishComment(@RequestBody CommentDto commentDto) {
         return commentService.publishComment(commentDto);
     }

@@ -26,10 +26,10 @@ custom:
     request:
         excluded-urls:
             - /login
+            - /user/register
             - /link/all
             - /comment/list
             - /comment/subordinate/list
-            - /user/register
 minio:
     access-key: minio
     secret-key: minioadmin

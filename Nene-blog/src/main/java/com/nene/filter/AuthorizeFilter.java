@@ -2,6 +2,7 @@ package com.nene.filter;
 
 import com.nene.cache.RedisCache;
 import com.nene.config.properties.CustomPassRules;
+import com.nene.constants.RedisConstants;
 import com.nene.domain.LoginUser;
 import com.nene.domain.ResponseResult;
 import com.nene.domain.entity.User;
@@ -86,7 +87,7 @@ public class AuthorizeFilter extends OncePerRequestFilter implements HandlerInte
         // 解析token获取用户id
         String id = claimsBody.get("id").toString();
         // 从redis中获取用户信息
-        User user = redisCache.getValue("BlogLogin_" + id, User.class);
+        User user = redisCache.getValue(RedisConstants.BLOG_LOGIN + id, User.class);
         if (user == null) {
             // 已注销, 需要重新登录
             ResponseResult responseResult = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);

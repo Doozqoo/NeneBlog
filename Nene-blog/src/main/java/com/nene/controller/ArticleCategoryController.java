@@ -1,5 +1,6 @@
 package com.nene.controller;
 
+import com.nene.annotation.ApiLog;
 import com.nene.domain.ResponseResult;
 import com.nene.service.ArticleCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,9 @@ public class ArticleCategoryController {
     @Autowired
     private ArticleCategoryService articleCategoryService;
 
+    @ApiLog(name = "文章分类列表")
     @GetMapping("/list")
-    public ResponseResult getArticleCategoryList(){
+    public ResponseResult getArticleCategoryList() {
         return articleCategoryService.getArticleCategoryList();
     }
 }
