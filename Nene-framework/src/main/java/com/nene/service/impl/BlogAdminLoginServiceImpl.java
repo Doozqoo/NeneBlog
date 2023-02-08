@@ -2,13 +2,14 @@ package com.nene.service.impl;
 
 import com.nene.cache.RedisCache;
 import com.nene.constants.RedisConstants;
+import com.nene.constants.SystemConstants;
 import com.nene.domain.ResponseResult;
 import com.nene.domain.dto.UserLoginDto;
 import com.nene.domain.entity.User;
 import com.nene.domain.vo.BlogUserLoginVo;
 import com.nene.enums.AppHttpCodeEnum;
 import com.nene.exception.CustomServiceException;
-import com.nene.service.BlogLoginService;
+import com.nene.service.BlogAdminLoginService;
 import com.nene.service.UserService;
 import com.nene.utils.BeanCopyUtil;
 import com.nene.utils.JwtUtil;
@@ -21,14 +22,14 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @ClassName BlogLoginServiceImpl
- * @Description 博客登录接口实现类
+ * @ClassName BlogAdminLoginServiceImpl
+ * @Description 博客管理平台登录服务接口实现类
  * @Author Protip
- * @Date 2023/1/7 18:15
+ * @Date 2023/2/6 15:28
  * @Version 1.0
  */
 @Service
-public class BlogLoginServiceImpl implements BlogLoginService {
+public class BlogAdminLoginServiceImpl implements BlogAdminLoginService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -70,6 +71,10 @@ public class BlogLoginServiceImpl implements BlogLoginService {
                 .eq(User::getUserName, userLoginDto.getAccount())
                 .one();
 
+        if (!SystemConstants.USER_TYPE_ADMIN.equals(user.getType())) {
+            throw new CustomServiceException(AppHttpCodeEnum.NEED_ADMIN_ACCOUNT);
+        }
+
         // 在redis中缓存用户数据
         String key = RedisConstants.BLOG_LOGIN + user.getId();
         redisCache.setValue(key, user);
@@ -78,16 +83,8 @@ public class BlogLoginServiceImpl implements BlogLoginService {
 
         // 生成token返回
         String token = JwtUtil.getToken(user.getId());
-        BlogUserLoginVo.UserInfo userInfo = BeanCopyUtil.beanCopy(user, BlogUserLoginVo.UserInfo.class);
-        BlogUserLoginVo blogUserLoginVo = new BlogUserLoginVo(token, userInfo);
+        BlogUserLoginVo blogUserLoginVo = new BlogUserLoginVo(token, null);
 
         return ResponseResult.okResult(blogUserLoginVo);
-    }
-
-    @Override
-    public ResponseResult logout(User user) {
-        String key = "BlogLogin_" + user.getId();
-        redisCache.delValue(key);
-        return ResponseResult.okResult("已成功注销！");
     }
 }

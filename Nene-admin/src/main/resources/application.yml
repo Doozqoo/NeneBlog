@@ -1,5 +1,5 @@
 server:
-    port: 8848
+    port: 8849
 spring:
     datasource:
         url: jdbc:mysql://192.168.31.45:3306/nene_blog?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
@@ -26,12 +26,6 @@ custom:
     request:
         excluded-urls:
             - /login
-            - /user/register
-            - /link/all
-            - /comment/list
-            - /comment/subordinate/list
-            - /swagger-ui/**
-            - /swagger-resources/**
 minio:
     access-key: minio
     secret-key: minioadmin

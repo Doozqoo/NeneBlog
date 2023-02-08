@@ -28,7 +28,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @ClassName AuthorizeFilter
@@ -38,10 +37,7 @@ import java.util.List;
  * @Version 1.0
  */
 @Component
-public class AuthorizeFilter extends OncePerRequestFilter implements HandlerInterceptor {
-
-    @Autowired
-    private CustomPassRules customPassRules;
+public class JwtAuthorizeFilter extends OncePerRequestFilter implements HandlerInterceptor {
 
     @Autowired
     private RedisCache redisCache;
@@ -49,20 +45,11 @@ public class AuthorizeFilter extends OncePerRequestFilter implements HandlerInte
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain chain) throws ServletException, IOException {
 
-        // 排除的地址直接放行
-        String uri = request.getRequestURI();
-        List<String> excludedUrls = customPassRules.getExcludedUrls();
-        if (excludedUrls.contains(uri)) {
-            chain.doFilter(request, response);
-            return;
-        }
-
         // 获取token
         String token = request.getHeader("token");
         if (!StringUtils.hasText(token)) {
-            // 需要登录获取token
-            ResponseResult responseResult = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
-            WebUtil.renderString(response, JacksonUtil.writeValueAsString(responseResult));
+            // 不需要token的接口，放行
+            chain.doFilter(request, response);
             return;
         }
 

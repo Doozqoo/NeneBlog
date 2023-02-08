@@ -66,4 +66,10 @@ public class SystemConstants {
     public static final String ROOT_COMMENT = "-1";
 
     public static final String COMMENT_TYPE_ARTICLE = "0";
+
+    /**
+     * 用户类型-管理员
+     */
+    public static final String USER_TYPE_ADMIN = "1";
+
 }

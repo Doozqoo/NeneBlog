@@ -1,7 +1,7 @@
 package com.nene.config;
 
-import com.nene.config.properties.CustomPassRules;
 import com.nene.filter.JwtAuthorizeFilter;
+import com.nene.config.properties.CustomPassRules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;

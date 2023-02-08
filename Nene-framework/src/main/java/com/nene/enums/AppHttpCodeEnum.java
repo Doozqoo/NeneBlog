@@ -16,7 +16,8 @@ public enum AppHttpCodeEnum {
     LOGIN_ERROR(605, "账户或密码错误"),
     USER_NOT_EXIST(606, "用户不存在"),
     USER_STATUS_CLOSED(606, "用户封禁中"),
-    EMPTY_DATA(607, "错误数据数据");
+    EMPTY_DATA(607, "错误数据数据"),
+    NEED_ADMIN_ACCOUNT(608, "需要管理员账户");
 
     int code;
     String msg;
