@@ -17,7 +17,7 @@ public enum AppHttpCodeEnum {
     USER_NOT_EXIST(606, "用户不存在"),
     USER_STATUS_CLOSED(606, "用户封禁中"),
     EMPTY_DATA(607, "错误数据数据"),
-    NEED_ADMIN_ACCOUNT(608, "需要管理员账户");
+    NEED_AUTHOR_ACCOUNT(608, "需要作者账户");
 
     int code;
     String msg;

@@ -52,8 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         // 允许匿名访问的接口
-        List<String> excludedUrls = customPassRules.getExcludedUrls();
-        String[] urls = excludedUrls.toArray(new String[0]);
+        String[] urls = customPassRules.getExcludedUrls().toArray(new String[0]);
 
         http
                 // 允许跨域访问

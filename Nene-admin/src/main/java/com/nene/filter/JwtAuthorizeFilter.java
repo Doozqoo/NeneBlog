@@ -74,7 +74,7 @@ public class JwtAuthorizeFilter extends OncePerRequestFilter implements HandlerI
         // 解析token获取用户id
         String id = claimsBody.get("id").toString();
         // 从redis中获取用户信息
-        User user = redisCache.getValue(RedisConstants.BLOG_LOGIN + id, User.class);
+        User user = redisCache.getValue(RedisConstants.BLOG_AUTHOR_LOGIN + id, User.class);
         if (user == null) {
             // 已注销, 需要重新登录
             ResponseResult responseResult = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);

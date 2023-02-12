@@ -19,4 +19,6 @@ public class RedisConstants {
     public static final String ARTICLE_VIEW_COUNT = "Article_ViewCount";
 
     public static final String BLOG_LOGIN = "BlogLogin_";
+
+    public static final String BLOG_AUTHOR_LOGIN = "AuthorLogin_";
 }

@@ -10,7 +10,7 @@ import com.nene.domain.dto.UserLoginDto;
  * @Date 2023/2/6 15:28
  * @Version 1.0
  */
-public interface BlogAdminLoginService {
+public interface AuthorLoginService {
 
     /**
      * 管理端用户登录

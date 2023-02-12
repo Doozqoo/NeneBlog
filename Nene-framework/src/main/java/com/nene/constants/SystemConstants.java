@@ -70,6 +70,6 @@ public class SystemConstants {
     /**
      * 用户类型-管理员
      */
-    public static final String USER_TYPE_ADMIN = "1";
+    public static final String USER_TYPE_AUTHOR = "1";
 
 }

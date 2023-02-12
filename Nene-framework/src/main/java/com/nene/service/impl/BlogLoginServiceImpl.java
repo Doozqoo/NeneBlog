@@ -5,7 +5,7 @@ import com.nene.constants.RedisConstants;
 import com.nene.domain.ResponseResult;
 import com.nene.domain.dto.UserLoginDto;
 import com.nene.domain.entity.User;
-import com.nene.domain.vo.BlogUserLoginVo;
+import com.nene.domain.vo.UserLoginVo;
 import com.nene.enums.AppHttpCodeEnum;
 import com.nene.exception.CustomServiceException;
 import com.nene.service.BlogLoginService;
@@ -78,10 +78,10 @@ public class BlogLoginServiceImpl implements BlogLoginService {
 
         // 生成token返回
         String token = JwtUtil.getToken(user.getId());
-        BlogUserLoginVo.UserInfo userInfo = BeanCopyUtil.beanCopy(user, BlogUserLoginVo.UserInfo.class);
-        BlogUserLoginVo blogUserLoginVo = new BlogUserLoginVo(token, userInfo);
+        UserLoginVo.UserInfo userInfo = BeanCopyUtil.beanCopy(user, UserLoginVo.UserInfo.class);
+        UserLoginVo userLoginVo = new UserLoginVo(token, userInfo);
 
-        return ResponseResult.okResult(blogUserLoginVo);
+        return ResponseResult.okResult(userLoginVo);
     }
 
     @Override

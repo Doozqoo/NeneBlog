@@ -5,7 +5,7 @@ import com.nene.domain.ResponseResult;
 import com.nene.domain.dto.UserLoginDto;
 import com.nene.enums.AppHttpCodeEnum;
 import com.nene.exception.CustomServiceException;
-import com.nene.service.BlogAdminLoginService;
+import com.nene.service.AuthorLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/admin")
-public class BlogAdminLoginController {
+public class AuthorLoginController {
 
     @Autowired
-    private BlogAdminLoginService blogAdminLoginService;
+    private AuthorLoginService authorLoginService;
 
     @ApiLog(name = "用户登录")
     @PostMapping("/login")
@@ -29,6 +29,6 @@ public class BlogAdminLoginController {
         if (userLoginDto.getAccount() == null || userLoginDto.getPassword() == null) {
             throw new CustomServiceException(AppHttpCodeEnum.LOGIN_ERROR);
         }
-        return blogAdminLoginService.login(userLoginDto);
+        return authorLoginService.login(userLoginDto);
     }
 }

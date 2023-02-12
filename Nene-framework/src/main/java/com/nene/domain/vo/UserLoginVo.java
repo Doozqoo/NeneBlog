@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BlogUserLoginVo {
+public class UserLoginVo {
 
     private String token;
     private UserInfo userInfo;
