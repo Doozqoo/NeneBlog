@@ -11,7 +11,7 @@ import com.nene.enums.AppHttpCodeEnum;
  */
 public class CustomServiceException extends RuntimeException {
 
-    private AppHttpCodeEnum appHttpCodeEnum;
+    private final AppHttpCodeEnum appHttpCodeEnum;
 
     public CustomServiceException(AppHttpCodeEnum appHttpCodeEnum) {
         this.appHttpCodeEnum = appHttpCodeEnum;

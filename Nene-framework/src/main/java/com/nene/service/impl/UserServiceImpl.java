@@ -11,7 +11,7 @@ import com.nene.exception.CustomServiceException;
 import com.nene.mapper.UserMapper;
 import com.nene.service.UserService;
 import com.nene.utils.BeanCopyUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -22,11 +22,11 @@ import org.springframework.util.StringUtils;
  * @createDate 2023-01-02 13:45:40
  */
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         implements UserService {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public ResponseResult getUserInfo(Long userId) {
@@ -78,11 +78,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         User user = BeanCopyUtil.beanCopy(dto, User.class);
         // 用户数据重复校验
         verification = this.checkUserName(user.getUserName());
-        if(verification){
+        if (verification) {
             throw new CustomServiceException(AppHttpCodeEnum.USERNAME_EXIST);
         }
         verification = this.checkEmail(user.getEmail());
-        if(verification){
+        if (verification) {
             throw new CustomServiceException(AppHttpCodeEnum.EMAIL_EXIST);
         }
 

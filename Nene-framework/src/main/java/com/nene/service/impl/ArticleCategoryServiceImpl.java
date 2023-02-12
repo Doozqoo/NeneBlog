@@ -10,7 +10,7 @@ import com.nene.mapper.ArticleCategoryMapper;
 import com.nene.service.ArticleCategoryService;
 import com.nene.service.ArticleService;
 import com.nene.utils.BeanCopyUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,11 +22,11 @@ import java.util.stream.Collectors;
  * @createDate 2022-12-29 15:35:13
  */
 @Service
+@RequiredArgsConstructor
 public class ArticleCategoryServiceImpl extends ServiceImpl<ArticleCategoryMapper, ArticleCategory>
         implements ArticleCategoryService {
 
-    @Autowired
-    private ArticleService articleService;
+    private final ArticleService articleService;
 
     @Override
     public ResponseResult getArticleCategoryList() {

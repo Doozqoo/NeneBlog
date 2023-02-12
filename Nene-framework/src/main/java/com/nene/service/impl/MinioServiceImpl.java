@@ -6,11 +6,10 @@ import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import io.minio.RemoveObjectArgs;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.Resource;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,14 +24,11 @@ import java.util.Date;
  * @Version 1.0
  */
 @Service
+@RequiredArgsConstructor
 public class MinioServiceImpl implements MinioService {
 
-    @Resource
-    private MinioClient minioClient;
-
-    @Autowired
-    private MinioConfigProperties minioConfigProperties;
-
+    private final MinioClient minioClient;
+    private final MinioConfigProperties minioConfigProperties;
     private final static String SEPARATOR = "/";
 
     /**
@@ -120,9 +116,9 @@ public class MinioServiceImpl implements MinioService {
         try {
             inputStream = minioClient.getObject(
                     GetObjectArgs.builder()
-                    .bucket(bucket)
-                    .object(filePath)
-                    .build()
+                            .bucket(bucket)
+                            .object(filePath)
+                            .build()
             );
         } catch (Exception e) {
             e.printStackTrace();

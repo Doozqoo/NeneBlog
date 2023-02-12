@@ -3,7 +3,7 @@ package com.nene.controller;
 import com.nene.annotation.ApiLog;
 import com.nene.domain.ResponseResult;
 import com.nene.service.UploadService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,11 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
  * @Version 1.0
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/upload")
 public class UploadController {
 
-    @Autowired
-    private UploadService uploadService;
+    private final UploadService uploadService;
 
     @ApiLog(name = "上传头像")
     @PostMapping("/avatar")

@@ -3,18 +3,18 @@ package com.nene.controller;
 import com.nene.annotation.ApiLog;
 import com.nene.domain.ResponseResult;
 import com.nene.service.ArticleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Ayachi Nene
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/article")
 public class ArticleController {
 
-    @Autowired
-    private ArticleService articleService;
+    private final ArticleService articleService;
 
     @ApiLog(name = "热门文章列表")
     @GetMapping("/list/hot")

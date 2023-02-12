@@ -7,7 +7,7 @@ import com.nene.enums.AppHttpCodeEnum;
 import com.nene.exception.CustomServiceException;
 import com.nene.service.BlogLoginService;
 import com.nene.utils.ThreadLocalUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @Version 1.0
  */
 @RestController
+@RequiredArgsConstructor
 public class BlogLoginController {
 
-    @Autowired
-    private BlogLoginService blogLoginService;
+    private final BlogLoginService blogLoginService;
 
     @ApiLog(name = "用户登录")
     @PostMapping("/login")

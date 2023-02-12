@@ -1,7 +1,7 @@
 package com.nene.cache;
 
 import com.nene.utils.JacksonUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -17,10 +17,10 @@ import java.util.concurrent.TimeUnit;
  * @Version 1.0
  */
 @Component
+@RequiredArgsConstructor
 public class RedisCache {
 
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     public void setValue(String k, Object o) {
         redisTemplate.opsForValue().set(k, o);
@@ -43,8 +43,7 @@ public class RedisCache {
     }
 
     public Map getHashMap(String k) {
-        Map<Object, Object> entries = redisTemplate.opsForHash().entries(k);
-        return entries;
+        return redisTemplate.opsForHash().entries(k);
     }
 
     public <T> T getValue(String k, String hk, Class<T> clazz) {

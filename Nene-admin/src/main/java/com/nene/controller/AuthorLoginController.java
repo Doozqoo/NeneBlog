@@ -6,8 +6,11 @@ import com.nene.domain.dto.UserLoginDto;
 import com.nene.enums.AppHttpCodeEnum;
 import com.nene.exception.CustomServiceException;
 import com.nene.service.AuthorLoginService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @ClassName BlogLoginController
@@ -17,11 +20,11 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AuthorLoginController {
 
-    @Autowired
-    private AuthorLoginService authorLoginService;
+    private final AuthorLoginService authorLoginService;
 
     @ApiLog(name = "用户登录")
     @PostMapping("/login")

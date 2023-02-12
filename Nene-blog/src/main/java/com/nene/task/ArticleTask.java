@@ -4,7 +4,7 @@ import com.nene.cache.RedisCache;
 import com.nene.constants.RedisConstants;
 import com.nene.domain.entity.Article;
 import com.nene.service.ArticleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -20,16 +20,14 @@ import java.util.stream.Collectors;
  * @Version 1.0
  */
 @Component
+@RequiredArgsConstructor
 public class ArticleTask {
 
-    @Autowired
-    private RedisCache redisCache;
-
-    @Autowired
-    private ArticleService articleService;
+    private final RedisCache redisCache;
+    private final ArticleService articleService;
 
     @Scheduled(cron = "0 0/1 * * * ?")
-    public void updateViewCount(){
+    public void updateViewCount() {
         Map<String, Integer> map = redisCache.getHashMap(RedisConstants.ARTICLE_VIEW_COUNT);
         List<Article> articles = map.entrySet().stream()
                 .map(entry -> {

@@ -12,7 +12,7 @@ import com.nene.exception.CustomServiceException;
 import com.nene.service.AuthorLoginService;
 import com.nene.service.UserService;
 import com.nene.utils.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,16 +28,12 @@ import java.util.concurrent.TimeUnit;
  * @Version 1.0
  */
 @Service
+@RequiredArgsConstructor
 public class AuthorLoginServiceImpl implements AuthorLoginService {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private RedisCache redisCache;
+    private final AuthenticationManager authenticationManager;
+    private final UserService userService;
+    private final RedisCache redisCache;
 
     @Override
     public ResponseResult login(UserLoginDto userLoginDto) {

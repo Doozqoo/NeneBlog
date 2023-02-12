@@ -4,7 +4,7 @@ import com.nene.cache.RedisCache;
 import com.nene.constants.RedisConstants;
 import com.nene.domain.entity.Article;
 import com.nene.service.ArticleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -20,13 +20,11 @@ import java.util.stream.Collectors;
  * @Version 1.0
  */
 @Component
+@RequiredArgsConstructor
 public class ArticleViewCountInit implements CommandLineRunner {
 
-    @Autowired
-    private ArticleService articleService;
-
-    @Autowired
-    private RedisCache redisCache;
+    private final ArticleService articleService;
+    private final RedisCache redisCache;
 
     @Override
     public void run(String... args) throws Exception {

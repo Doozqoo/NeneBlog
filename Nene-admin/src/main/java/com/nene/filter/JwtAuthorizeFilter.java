@@ -1,7 +1,6 @@
 package com.nene.filter;
 
 import com.nene.cache.RedisCache;
-import com.nene.config.properties.CustomPassRules;
 import com.nene.constants.RedisConstants;
 import com.nene.domain.LoginUser;
 import com.nene.domain.ResponseResult;
@@ -12,8 +11,8 @@ import com.nene.utils.JwtUtil;
 import com.nene.utils.ThreadLocalUtil;
 import com.nene.utils.WebUtil;
 import io.jsonwebtoken.Claims;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,10 +36,10 @@ import java.io.IOException;
  * @Version 1.0
  */
 @Component
+@RequiredArgsConstructor
 public class JwtAuthorizeFilter extends OncePerRequestFilter implements HandlerInterceptor {
 
-    @Autowired
-    private RedisCache redisCache;
+    private final RedisCache redisCache;
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain chain) throws ServletException, IOException {

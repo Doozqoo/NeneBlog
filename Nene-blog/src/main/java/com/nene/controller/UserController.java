@@ -6,7 +6,7 @@ import com.nene.domain.dto.UserRegisterDto;
 import com.nene.domain.dto.UserUpdateDto;
 import com.nene.service.UserService;
 import com.nene.utils.ThreadLocalUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @ApiLog(name = "用户信息")
     @GetMapping("/info")

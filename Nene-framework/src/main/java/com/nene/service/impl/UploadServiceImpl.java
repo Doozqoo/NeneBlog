@@ -5,7 +5,7 @@ import com.nene.enums.AppHttpCodeEnum;
 import com.nene.exception.CustomServiceException;
 import com.nene.service.MinioService;
 import com.nene.service.UploadService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,15 +20,15 @@ import java.util.UUID;
  * @Version 1.0
  */
 @Service
+@RequiredArgsConstructor
 public class UploadServiceImpl implements UploadService {
 
-    @Autowired
-    private MinioService minioService;
+    private final MinioService minioService;
 
     @Override
     public ResponseResult uploadAvatar(MultipartFile file) {
 
-        if(file == null){
+        if (file == null) {
             return ResponseResult.errorResult(AppHttpCodeEnum.EMPTY_DATA);
         }
 

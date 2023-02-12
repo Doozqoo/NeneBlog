@@ -18,7 +18,7 @@ public class JwtUtil {
     /**
      * TOKEN的有效期(ms)
      */
-    private static final int TOKEN_TIME_OUT = 604800 * 1000;
+    private static final int TOKEN_TIME_OUT = 14 * 24 * 60 * 60 * 1000;
 
     /**
      * 加密KEY
@@ -28,7 +28,7 @@ public class JwtUtil {
     /**
      * 最小刷新间隔(ms)
      */
-    private static final int REFRESH_TIME = 300 * 1000;
+    private static final int REFRESH_TIME = 3 * 60 * 60 * 1000;
 
     /**
      * 生成Token
@@ -42,11 +42,11 @@ public class JwtUtil {
                 //签发时间
                 .setIssuedAt(new Date(currentTime))
                 //说明
-                .setSubject("system")
+                .setSubject("login")
                 //签发者信息
                 .setIssuer("nene")
                 //接收用户
-                .setAudience("app")
+                .setAudience("momo")
                 //数据压缩方式
                 .compressWith(CompressionCodecs.GZIP)
                 //加密方式
@@ -88,15 +88,16 @@ public class JwtUtil {
     /**
      * 是否过期
      *
-     * @return -1：有效，0：有效，1：过期，2：过期
+     * @return -1:有效 0:有效,需要刷新token 1:过期 2:过期
      */
     public static int verifyToken(Claims claims) {
         if (claims == null) {
             return 1;
         }
         try {
-            claims.getExpiration()
-                    .before(new Date());
+            if(claims.getExpiration().before(new Date())){
+                return 2;
+            }
             // 需要自动刷新TOKEN
             if ((claims.getExpiration().getTime() - System.currentTimeMillis()) > REFRESH_TIME) {
                 return -1;

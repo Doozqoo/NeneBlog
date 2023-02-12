@@ -4,7 +4,9 @@ import com.nene.annotation.ApiLog;
 import com.nene.domain.ResponseResult;
 import com.nene.domain.dto.CommentDto;
 import com.nene.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -15,14 +17,16 @@ import org.springframework.web.bind.annotation.*;
  * @Version 1.0
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/comment")
+@Api(tags = "评论", produces = "评论相关服务的接口")
 public class CommentController {
 
-    @Autowired
-    private CommentService commentService;
+    private final CommentService commentService;
 
     @ApiLog(name = "评论列表")
     @GetMapping("/list")
+    @ApiOperation(value = "获取评论列表")
     public ResponseResult commentPage(@RequestParam("id") Long articleId, @RequestParam("p") Integer pageNum, @RequestParam("n") Integer pageSize) {
         return commentService.getCommentPage(articleId, pageNum, pageSize);
     }

@@ -1,8 +1,8 @@
 package com.nene.config;
 
-import com.nene.filter.JwtAuthorizeFilter;
 import com.nene.config.properties.CustomPassRules;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.nene.filter.JwtAuthorizeFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
@@ -16,8 +16,6 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.List;
-
 /**
  * @ClassName SecurityConfig
  * @Description Security配置类
@@ -26,16 +24,13 @@ import java.util.List;
  * @Version 1.0
  */
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private JwtAuthorizeFilter jwtAuthorizeFilter;
-    @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
-    @Autowired
-    private AuthenticationEntryPoint authenticationEntryPoint;
-    @Autowired
-    private CustomPassRules customPassRules;
+    private final JwtAuthorizeFilter jwtAuthorizeFilter;
+    private final AccessDeniedHandler accessDeniedHandler;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final CustomPassRules customPassRules;
 
     @Bean
     @Override

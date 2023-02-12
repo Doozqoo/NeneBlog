@@ -13,12 +13,11 @@ import com.nene.mapper.CommentMapper;
 import com.nene.service.CommentService;
 import com.nene.service.UserService;
 import com.nene.utils.BeanCopyUtil;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,6 +29,7 @@ import java.util.stream.Stream;
  * @createDate 2023-01-10 18:43:10
  */
 @Service
+@RequiredArgsConstructor
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         implements CommentService {
 
@@ -37,8 +37,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
 
     private static final int DEFAULT_PAGE_SIZE = 3;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @Override
     public ResponseResult getCommentPage(Long articleId, Integer pageNum, Integer pageSize) {
@@ -132,7 +131,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      */
     private List<CommentVo> toCommentVo(List<Comment> comments) {
 
-        if(CollectionUtils.isEmpty(comments)){
+        if (CollectionUtils.isEmpty(comments)) {
             return null;
         }
 
@@ -157,12 +156,12 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         // 根据用户id补全缺少的用户信息
         List<CommentVo> commentVos = BeanCopyUtil.beanListCopy(comments, CommentVo.class);
         for (CommentVo commentVo : commentVos) {
-            if(userIdToUserMap.containsKey(commentVo.getCreateBy())){
+            if (userIdToUserMap.containsKey(commentVo.getCreateBy())) {
                 User user = userIdToUserMap.get(commentVo.getCreateBy());
                 commentVo.setUsername(user.getNickName());
                 commentVo.setAvatar(user.getAvatar());
             }
-            if(userIdToUserMap.containsKey(commentVo.getCreateBy())){
+            if (userIdToUserMap.containsKey(commentVo.getCreateBy())) {
                 User user = userIdToUserMap.get(commentVo.getCreateBy());
                 commentVo.setToCommentUsername(user.getNickName());
             }

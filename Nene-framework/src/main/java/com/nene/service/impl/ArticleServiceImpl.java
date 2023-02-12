@@ -16,7 +16,7 @@ import com.nene.enums.AppHttpCodeEnum;
 import com.nene.mapper.ArticleMapper;
 import com.nene.service.ArticleService;
 import com.nene.utils.BeanCopyUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,11 +28,11 @@ import java.util.Objects;
  * @createDate 2022-12-24 18:20:31
  */
 @Service
+@RequiredArgsConstructor
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         implements ArticleService {
 
-    @Autowired
-    private RedisCache redisCache;
+    private final RedisCache redisCache;
 
     @Override
     public ResponseResult getHotArticleList() {
