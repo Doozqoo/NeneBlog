@@ -15,7 +15,6 @@ public interface UploadService {
      * 上传头像
      *
      * @param file   头像数据
-     * @param userId
      * @return
      */
     ResponseResult uploadAvatar(MultipartFile file);

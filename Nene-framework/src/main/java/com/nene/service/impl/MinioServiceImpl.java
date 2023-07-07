@@ -50,38 +50,20 @@ public class MinioServiceImpl implements MinioService {
     }
 
     @Override
-    public String uploadImgFile(String prefix, String filename, InputStream inputStream) {
+    public String uploadFile(String prefix, String filename, String contentType, String bucket, InputStream inputStream) {
         String filePath = builderFilePath(prefix, filename);
         try {
             PutObjectArgs putObjectArgs = PutObjectArgs.builder()
                     // 设置文件存储路径
                     .object(filePath)
                     // 设置文件类型
-                    .contentType("image/jpg")
+                    .contentType(contentType)
                     // 设置存储桶
-                    .bucket(minioConfigProperties.getBucket())
+                    .bucket(bucket)
                     // 设置数据流
                     .stream(inputStream, inputStream.available(), -1).build();
             minioClient.putObject(putObjectArgs);
-            return minioConfigProperties.getEndpoint() + SEPARATOR + minioConfigProperties.getBucket() + SEPARATOR + filePath;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("上传文件失败");
-        }
-    }
-
-    @Override
-    public String uploadHtmlFile(String prefix, String filename, InputStream inputStream) {
-        String filePath = builderFilePath(prefix, filename);
-        try {
-            PutObjectArgs putObjectArgs = PutObjectArgs.builder()
-                    .object(filePath)
-                    .contentType("text/html")
-                    .bucket(minioConfigProperties.getBucket())
-                    .stream(inputStream, inputStream.available(), -1)
-                    .build();
-            minioClient.putObject(putObjectArgs);
-            return minioConfigProperties.getEndpoint() + SEPARATOR + minioConfigProperties.getBucket() + SEPARATOR + filePath;
+            return minioConfigProperties.getEndpoint() + SEPARATOR + bucket + SEPARATOR + filePath;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("上传文件失败");

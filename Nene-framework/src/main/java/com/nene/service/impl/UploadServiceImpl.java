@@ -1,5 +1,6 @@
 package com.nene.service.impl;
 
+import com.nene.constants.MinioConstants;
 import com.nene.domain.ResponseResult;
 import com.nene.enums.AppHttpCodeEnum;
 import com.nene.exception.CustomServiceException;
@@ -42,8 +43,25 @@ public class UploadServiceImpl implements UploadService {
             // --生成文件名
             String filename = UUID.randomUUID().toString().replace("-", "");
 
+            String contentType;
+            switch (postfix) {
+                case ".jpg":
+                    ;
+                case ".jpeg":
+                    contentType = MinioConstants.CONTENT_TYPE_JPEG;
+                    break;
+                case ".png":
+                    contentType = MinioConstants.CONTENT_TYPE_PNG;
+                    break;
+                case ".gif":
+                    contentType = MinioConstants.CONTENT_TYPE_GIF;
+                    break;
+                default:
+                    return ResponseResult.errorResult(AppHttpCodeEnum.FILE_TYPE_ERR);
+            }
+
             // 2.1 上传数据并返回访问地址 url
-            String url = minioService.uploadImgFile("", filename + postfix, file.getInputStream());
+            String url = minioService.uploadFile("", filename + postfix, contentType, MinioConstants.BUCKET_AVATAR, file.getInputStream());
             return ResponseResult.okResult(url);
         } catch (IOException e) {
             throw new CustomServiceException(AppHttpCodeEnum.SYSTEM_ERROR);

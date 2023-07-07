@@ -16,11 +16,12 @@ public enum AppHttpCodeEnum {
     LOGIN_ERROR(605, "账户或密码错误"),
     USER_NOT_EXIST(606, "用户不存在"),
     USER_STATUS_CLOSED(606, "用户封禁中"),
-    EMPTY_DATA(607, "错误数据数据"),
-    NEED_AUTHOR_ACCOUNT(608, "需要作者账户");
+    EMPTY_DATA(607, "数据不正确"),
+    NEED_AUTHOR_ACCOUNT(608, "需要作者账户"),
+    FILE_TYPE_ERR(609, "数据不正确");
 
-    int code;
-    String msg;
+    final int code;
+    final String msg;
 
     AppHttpCodeEnum(int code, String msg) {
         this.code = code;
