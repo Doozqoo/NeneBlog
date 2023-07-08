@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 public @interface RateLimit {
 
     // 令牌的生成速率，单位为秒，默认为1
-    Double refillRate() default 1.0;
+    double refillRate() default 1.0;
 
     // 超出限制时的响应，默认为HTTP 429 Too Many Requests
     HttpStatus responseStatus() default HttpStatus.TOO_MANY_REQUESTS;
