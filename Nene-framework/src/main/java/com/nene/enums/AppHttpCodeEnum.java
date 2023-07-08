@@ -18,7 +18,11 @@ public enum AppHttpCodeEnum {
     USER_STATUS_CLOSED(606, "用户封禁中"),
     EMPTY_DATA(607, "数据不正确"),
     NEED_AUTHOR_ACCOUNT(608, "需要作者账户"),
-    FILE_TYPE_ERR(609, "数据不正确");
+    FILE_TYPE_ERR(609, "数据不正确"),
+    TOO_MANY_REQUESTS(429, "请求太频繁"),
+    ;
+
+    //Too many requests
 
     final int code;
     final String msg;

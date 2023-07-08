@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 public class EasyExcelUtils {
 
-    public static void writeExcel(HttpServletResponse response, Class<?> excelEntity, String fileName) {
+    public static void writeExcel(HttpServletResponse response, Class<?> excelEntity, String fileName, Collection<?> data) {
 
         try {
             fileName = URLEncoder.encode(fileName + ".xlsx", "UTF-8").replaceAll("\\+", "%20");
@@ -27,7 +28,7 @@ public class EasyExcelUtils {
             ExcelWriter excelWriter = EasyExcel.write(response.getOutputStream()).build();
             WriteSheet writeSheet = EasyExcelUtils.writeSelectedSheet(excelEntity, 0, "导入表格");
             // 此处只导出实体类中的数据所以只new 一个空的list，如果想导出数据库数据需要从数据库中查询数据list
-            excelWriter.write(ListUtils.newArrayList(), writeSheet);
+            excelWriter.write(data, writeSheet);
             excelWriter.finish();
         } catch (IOException e) {
             log.error(e.getMessage());

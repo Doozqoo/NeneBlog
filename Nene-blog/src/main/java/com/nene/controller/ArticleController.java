@@ -1,6 +1,7 @@
 package com.nene.controller;
 
 import com.nene.annotation.ApiLog;
+import com.nene.annotation.RateLimit;
 import com.nene.domain.ResponseResult;
 import com.nene.service.ArticleService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class ArticleController {
     }
 
     @ApiLog(name = "文章列表")
+    @RateLimit
     @GetMapping("/list")
     public ResponseResult getArticleList(@RequestParam("p") Integer pageNum, @RequestParam("n") Integer pageSize, @RequestParam(name = "c", required = false) Long categoryId) {
         return articleService.getArticleSnapshotList(pageNum, pageSize, categoryId);

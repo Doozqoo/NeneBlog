@@ -3,6 +3,7 @@ package com.nene.handler;
 import com.nene.domain.ResponseResult;
 import com.nene.enums.AppHttpCodeEnum;
 import com.nene.exception.CustomServiceException;
+import com.nene.exception.RateLimitException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
@@ -25,6 +26,11 @@ public class GlobalExceptionHandler {
         log.info(e.toString());
         AppHttpCodeEnum appHttpCodeEnum = e.getAppHttpCodeEnum();
         return ResponseResult.errorResult(appHttpCodeEnum);
+    }
+
+    @ExceptionHandler(RateLimitException.class)
+    public ResponseResult handleRateLimitException(RateLimitException e) {
+        return ResponseResult.errorResult(AppHttpCodeEnum.TOO_MANY_REQUESTS);
     }
 
     @ExceptionHandler({Exception.class})

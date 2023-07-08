@@ -1,5 +1,6 @@
 package com.nene.controller;
 
+import com.nene.annotation.ApiLog;
 import com.nene.domain.ResponseResult;
 import com.nene.service.TagService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ public class TagController {
 
     private final TagService tagService;
 
+    @ApiLog(name = "获取标签列表")
     @GetMapping("/list")
     public ResponseResult tagList() {
         return tagService.getTagList();

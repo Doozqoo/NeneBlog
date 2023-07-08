@@ -28,6 +28,7 @@ custom:
         excluded-urls:
             - /login
             - /user/register
+            - /article/list
             - /link/all
             - /comment/list
             - /comment/subordinate/list
